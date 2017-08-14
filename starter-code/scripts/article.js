@@ -56,7 +56,9 @@ Article.loadAll = function(rawData) {
 // This function will retrieve the data from either a local or remote source,
 // and process it, then hand off control to the View.
 Article.fetchAll = function() {
-
+  // TODO: When we don't already have the rawData,
+  // we need to retrieve the JSON file from the server with AJAX (which jQuery method is best for this?),
+  // cache it in localStorage so we can skip the server call next time,
   if (!localStorage.rawData) {
     ///////$.getJSON(url[, data][,success]) load JSON-encoded data from the server using a GET HTTP request
     ////////////url is a string containing the URL to which the request is sent
@@ -69,9 +71,13 @@ Article.fetchAll = function() {
       ///////JSON.stringify()  converts a js object into a string, formatted using JSON. this allows you to send JS objects from the browser to another application
     });
   }
+// When rawData is already in localStorage,
+// we can load it with the .loadAll function above,
+
   Article.loadAll(JSON.parse(localStorage.rawData));
   ////JSON.parse() processes a string containing JSON data; converts the JSON data into a JS objects ready for the browser to use
   articleView.initIndexPage();
+  // and then render the index page (using the proper method on the articleView object).
 }
 // if localStorage rawdata exist then use localStorage rawdata
 // rawdata is stored in hackeripsum.json
