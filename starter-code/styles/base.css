@@ -1,20 +1,24 @@
 img {
   max-width: 100%;
 }
+/*max-width 100% = entire space of container*/
 
 body {
   line-height: 1.5;
   font-size: 100%;
+  /*100% = basic font size/default font size*/
   color: #313131;
 }
 
 main {
   margin: auto;
+  /*center the page; put in middle of container; equal space on each side*/
   width: 90%;
 }
 
 hr {
   margin: 1em;
+  /*margin 1em = slightly indented*/
   width: 80%;
 }
 
@@ -26,6 +30,8 @@ p {
 
 address {
   display: inline-block;
+  /*if inline-block then cannot use margin: auto; use flexbox
+  inline so things can be after it; block so you can set width*/
 }
 
 /*LINK STYLES
@@ -53,14 +59,17 @@ input {
   width: 100%;
   margin: .5em 0;
   border: 1px solid #ccc;
+  /*3 same character white/grey/black*/
   border-width: 0 0 1px 0;
   border-radius: 0;
+  /*set border-radius = 0 so you are not accidentally be overridden by something else*/
 }
 
 input[type="checkbox"] {
   width: .28em;
   height: .28em;
   font-size: 3em;
+  /*styling the checkbox size*/
 }
 
 textarea {

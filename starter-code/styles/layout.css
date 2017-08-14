@@ -1,3 +1,5 @@
+/*id or classes*/
+
 .pull-left {
   float: left;
 }
@@ -5,9 +7,10 @@
 .pull-right {
   float: right;
 }
-
+/*put it at the tail end within the element/the last child of the selected element*/
 .clearfix::after {
   content: "";
+  /*"" empty string*/
   display: table;
   clear: both;
 }
@@ -19,6 +22,8 @@
 #filters select {
   width: 90%;
   margin: .2em 5%;
+  /*em is the size of letter m*/
+  use em for text
 }
 
 @media only screen and (min-width: 640px) {
@@ -28,8 +33,10 @@
   }
 
   #filters select {
+    /*any select box inside an element of filter*/
     width: 15em;
     margin: .2em .2em;
+    top/bottom right and left
   }
 
   #filters li {

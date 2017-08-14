@@ -14,7 +14,12 @@ function Article (rawDataObj) {
 // objects, which means we can add properties/values to them at any time. In this case, we have
 // a key/value pair to track, that relates to ALL of the Article objects, so it does not belong on
 // the prototype, as that would only be relevant to a single instantiated Article.
+///////can add properties to function; on constructor function itself;
+///////adding the property all to article constructor function
+////////this array is not going to be added to each new article instance; it's only on the constructor function itself
+///////this array can only accessed with Article.all
 Article.all = [];
+
 
 Article.prototype.toHtml = function() {
   let template = Handlebars.compile($('#article-template').text());
@@ -33,6 +38,11 @@ Article.prototype.toHtml = function() {
 // REVIEW: This function will take the rawData, however it is provided,
 // and use it to instantiate all the articles. This code is moved from elsewhere, and
 // encapsulated in a simply-named function for clarity.
+/////loadAll absorb all rawdata
+////////class method/constructor method;
+/////only called on capital Article, not a prototype
+/////////////rawData is the parameter
+////////constructor method Article.loadAll
 Article.loadAll = function(rawData) {
   rawData.sort(function(a,b) {
     return (new Date(b.publishedOn)) - (new Date(a.publishedOn));
@@ -46,17 +56,23 @@ Article.loadAll = function(rawData) {
 // This function will retrieve the data from either a local or remote source,
 // and process it, then hand off control to the View.
 Article.fetchAll = function() {
-  if (localStorage.rawData) {
-    // When rawData is already in localStorage,
-    // we can load it with the .loadAll function above,
-    // and then render the index page (using the proper method on the articleView object).
-    Article.loadAll(); //TODO: What do we pass in to loadAll()?
-    //TODO: What method do we call to render the index page?
-  } else {
-    // TODO: When we don't already have the rawData,
-    // we need to retrieve the JSON file from the server with AJAX (which jQuery method is best for this?),
-    // cache it in localStorage so we can skip the server call next time,
-    // then load all the data into Article.all with the .loadAll function above,
-    // and then render the index page.
+
+  if (!localStorage.rawData) {
+    ///////$.getJSON(url[, data][,success]) load JSON-encoded data from the server using a GET HTTP request
+    ////////////url is a string containing the URL to which the request is sent
+    ////////////success; type function is a callback function that is executed if the request succeeds
+    $.getJSON('./data/hackerIpsum.json', function(data) {
+      localStorage.setItem('rawData', JSON.stringify(data));
+      ///////storage.setItem(keyName, keyValue);
+      ///////setItem is a method to put rawdata into localStorage;
+      ///////setItem() method of the storage interface, when passed a key name and value, will add that key to the storage, or update that key's value if it already exists.
+      ///////JSON.stringify()  converts a js object into a string, formatted using JSON. this allows you to send JS objects from the browser to another application
+    });
   }
+  Article.loadAll(JSON.parse(localStorage.rawData));
+  ////JSON.parse() processes a string containing JSON data; converts the JSON data into a JS objects ready for the browser to use
+  articleView.initIndexPage();
 }
+// if localStorage rawdata exist then use localStorage rawdata
+// rawdata is stored in hackeripsum.json
+// if hackeripsum is not in localStorage already then do so
